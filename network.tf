@@ -68,3 +68,18 @@ output "nat_ip_address" {
 #     "${var.private_subnet_cidr_1}"
 #   ]
 # }
+
+
+# data "google_compute_network" "pochelm" {
+#   name = "default-us-central1"
+#   project = "poc-helm"
+# }
+
+resource "google_compute_network_peering" "peering-iap-web2poc-helm" {
+  name         = "peering-iap-web2poc-helm"
+  network      = google_compute_network.vpc.id
+  peer_network = "projects/poc-helm/global/networks/default"
+  export_custom_routes = true
+  import_custom_routes = true
+
+}
